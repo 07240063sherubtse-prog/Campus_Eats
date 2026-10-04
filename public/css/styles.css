@@ -346,4 +346,13 @@ main {
   text-decoration: none;
 }
 
-
+.error {
+  background-color: #fdecea;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
