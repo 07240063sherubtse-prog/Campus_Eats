@@ -4,6 +4,9 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const { connectMongo } = require('./config/mongo');
+connectMongo().catch(err => console.error('MongoDB connection failed:', err));
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
