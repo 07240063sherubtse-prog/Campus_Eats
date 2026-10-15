@@ -9,6 +9,8 @@ const orderController = require('../controllers/orderController');
 const adminController = require('../controllers/adminController');
 const superAdminController = require('../controllers/superAdminController');
 const { requireAuth, requireAdmin, requireSuperAdmin } = require('../middleware/auth');
+const { connectMongo } = require('../config/mongo');
+const feedbackController = require('../controllers/feedbackController');
 
 // Pages
 router.get('/', homeController.getHome);
@@ -47,10 +49,9 @@ router.post('/superadmin/grant-admin', requireSuperAdmin, superAdminController.g
 
 module.exports = router;
 
-const { connectMongo } = require('../config/mongo');
+router.get('/mongo-test', async (req, res) => {  
+    const db = await connectMongo();  
+    const collections = await db.listCollections().toArray();  
+    res.json({ connected: true, collections });});
 
-router.get('/mongo-test', async (req, res) => {
-  const db = await connectMongo();
-  const collections = await db.listCollections().toArray();
-  res.json({ connected: true, collections });
-});
+router.post('/restaurants/:id/feedback', feedbackController.submitFeedback);

@@ -21,3 +21,12 @@ exports.addMenuItem = async (req, res) => {
   res.redirect('/admin/dashboard');
 };
 
+exports.addMenuItem = async (req, res) => {
+  const restaurant = await Restaurant.getRestaurantByOwnerId(req.session.user.id);
+  const { name, price } = req.body;
+  if (!restaurant || !name || !price || Number(price) <= 0) {
+    return res.redirect('/admin/dashboard');
+  }
+  await MenuItem.createMenuItem({ restaurantId: restaurant.id, name, price: Number(price) });
+  res.redirect('/admin/dashboard');
+};
